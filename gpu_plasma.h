@@ -118,7 +118,10 @@ double get_meminfo1(void)
 		if(memcmp(tmp,"Mem:",4)==0)
 		{
 			int	wordcount=0;
-			char *delimiter=" ";
+			char delimiter[10];
+
+			strcpy(delimiter," ");
+
 			char *p=strtok(tmp,delimiter);
 			while(*p)
 			{
