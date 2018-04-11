@@ -1,0 +1,27 @@
+     1.00000e-03 plasma electron temperature along X 
+     1.00000e-03 plasma electron temperature along Y 
+     1.00000e-03 plasma electron temperature along Z 
+     2.00000e-01 beam impulse
+     1.40000e-01 beam velocity dispersion 
+     2.00000e-02 beam and plasma density ratio 
+     1.00000e+00 plasma density 
+     0.60000e+00 external magnetic field (along X) 
+     1.00000e+00 domain size X 
+     1.00000e+00 domain size Y 
+     0.00000e+00 domain size Z 
+     2.00000e-01 plasma size Y
+     0.00000e+00 plasma size Z
+     2.00000e-01 beam size X 
+     2.00000e-01 beam size Y 
+     0.00000e+00 beam size Z 
+             100   average number of particles in cell 
+              20   number of mesh nodes along X 
+              20   number of mesh nodes along Y 
+               1   number of mesh nodes along Z 
+     1.00000e-03   timestep 
+               1   1 if beam-plasma interaction, 0 if beam-beam 
+              -2   moment to start from saved
+               2   phase to start from save
+              100   total steps 
+               2   number of steps between diagnostic files 
+ 
