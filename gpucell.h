@@ -281,7 +281,7 @@ GPUCell<Particle,dims>* copyCellToDevice( vector<GPUCell<Particle,dims> > * all_
      return d_dst;
 }
 
-void copyCellFromDevice(GPUCell<Particle,dims>* d_src,GPUCell<Particle,dims>* h_dst,char *where,int nt)
+void copyCellFromDevice(GPUCell<Particle,dims>* d_src,GPUCell<Particle,dims>* h_dst,string where,int nt)
 {
 	static GPUCell<Particle,dims> *h_copy_of_d_src;
 	static int first = 1;

@@ -2080,7 +2080,7 @@ void InitGPUParticles()
 }
 
 
-void copyCells(char *where,int nt)
+void copyCells(string where,int nt)
 {
 	static int first = 1;
 	size_t m_free,m_total;
@@ -2320,14 +2320,14 @@ void virtual emeGPUIterate(int i_s,int i_f,int l_s,int l_f,int k_s,int k_f,
 //    TEST_ERROR(err);
 }
 
-int virtual ElectricFieldTrace(char *lname,int nt,
+int virtual ElectricFieldTrace(string lname,int nt,
   double *E,double *H1,double *H2,double *J,double *dbg_E0,double *dbg_E,double *dbg_H1,double *dbg_H2,double *dbg_J,int dir,double c1,double c2,double tau)
   {
       int i_start,l_start,k_start,dx1,dy1,dz1,dx2,dy2,dz2;
       double *dbg_E_aper;
       char logname[100];
 
-      sprintf(logname,"%s%03d.dat",lname,nt);
+      sprintf(logname,"%s%03d.dat",lname.c_str(),nt);
 
 
 #ifdef DEBUG_PLASMA_EFIELDS
@@ -3809,7 +3809,7 @@ virtual void emh2(double *locHx,double *locHy,double *locHz,
 	}
 
 
-	int MagneticFieldTrace(Cell<Particle,dims> &c,char *lname,int nt,double *Q,double *H,double *E1,double *E2,int i_end,int l_end,int k_end,double c1,double c2,int dir)
+	int MagneticFieldTrace(Cell<Particle,dims> &c,string lname,int nt,double *Q,double *H,double *E1,double *E2,int i_end,int l_end,int k_end,double c1,double c2,int dir)
 	{
 	      int dx1,dy1,dz1,dy2,dx2,dz2;
 	      double e1_n1,e1_n,e2_n2,e2_n,t;
@@ -3824,7 +3824,7 @@ virtual void emh2(double *locHx,double *locHy,double *locHz,
 	     ldE2 = (double *)malloc(mesh.size2()*sizeof(double));
 	     ldH  = (double *)malloc(mesh.size2()*sizeof(double));
 
-	     sprintf(logname,"%s%03d.dat",lname,nt);
+	     sprintf(logname,"%s%03d.dat",lname.c_str(),nt);
 
 	     read3DarrayLog(logname, ldQ,40,0);
 	     read3DarrayLog(logname, ldE1,40,2);
@@ -5012,7 +5012,7 @@ void readControlPoint(FILE **f1,char *fncpy,int num,int nt,int part_read,int fie
 
 }
 
-double checkControlMatrix(char *wh,int nt,char *name, double *d_m)
+double checkControlMatrix(string wh,int nt,string name, double *d_m)
 {
 	double /*t_ex,t_ey,t_ez,t_hx,t_hy,t_hz,*/t_jx,t_jy,t_jz;
 	char fn[100];//,fn_next[100];
@@ -5022,7 +5022,7 @@ double checkControlMatrix(char *wh,int nt,char *name, double *d_m)
 	return 0.0;
 #endif
 
-	sprintf(fn,"wcmx_%4s_%08d_%2s.dat",wh,nt,name);
+	sprintf(fn,"wcmx_%4s_%08d_%2s.dat",wh.c_str(),nt,name.c_str());
 	if((f = fopen(fn,"rb")) == NULL) return -1.0;
 
 	readFortranBinaryArray(f,dbgJx);
@@ -5209,13 +5209,13 @@ void checkControlPoint(int num,int nt,int check_part)
 
 	}
 
-	int readDebugArray(char* name, double* d,int nt,int col)
+	int readDebugArray(string name, double* d,int nt,int col)
 	{
 		char dfile[100];
 
-		if(!strncmp(name+2,"lg",2))
+		if(!strncmp(name.c_str()+2,"lg",2))
 		{
-			sprintf(dfile,"%s%03d.dat",name,nt);
+			sprintf(dfile,"%s%03d.dat",name.c_str(),nt);
 			if(name[0] == 'e')
 			{
 			   read3DarrayLog(dfile, d,50,col);
@@ -5227,7 +5227,7 @@ void checkControlPoint(int num,int nt,int check_part)
 		}
 		else
 		{
-			sprintf(dfile,"%s%06d.dat",name,nt);
+			sprintf(dfile,"%s%06d.dat",name.c_str(),nt);
 			read3Darray(dfile,d);
 		}
 		return 0;
@@ -5852,7 +5852,7 @@ void copyCellCurrentsToDevice(CellDouble *d_jx,CellDouble *d_jy,CellDouble *d_jz
 
 
 
-	   void ListAllParticles(int nt,char *where)
+	   void ListAllParticles(int nt,string where)
 	   	{
 	   		FILE *f;
 	   		char str[200];
@@ -5872,7 +5872,7 @@ void copyCellCurrentsToDevice(CellDouble *d_jx,CellDouble *d_jy,CellDouble *d_jz
 #endif
 	   		}
 
-	   		sprintf(str,"List%05d_rank%05d_%s.dat\0",nt,getRank(),where);
+	   		sprintf(str,"List%05d_rank%05d_%s.dat\0",nt,getRank(),where.c_str());
 //	   		puts(str);
 
 	   		if((f = fopen(str,"wt")) == NULL) return;
@@ -6040,7 +6040,7 @@ puts("Jy");
 	}
 
 
-	int write_field_component(int nt,double *d_f,char *where,char *name,int size)
+	int write_field_component(int nt,double *d_f,string where,string name,int size)
 	{
 		static int first = 1;
 		static double *h_f;
@@ -6063,7 +6063,7 @@ puts("Jy");
 		 char fname[100];
 		 FILE *f;
 
-		 sprintf(fname,"comp%s_at_%s_%s_rank%05d_nt%08d.dat",name,where,unique_variant_name,getRank(),nt);
+		 sprintf(fname,"comp%s_at_%s_%s_rank%05d_nt%08d.dat",name.c_str(),where.c_str(),unique_variant_name,getRank(),nt);
 
 		 if((f = fopen(fname,"wt")) == NULL) return 1;
 

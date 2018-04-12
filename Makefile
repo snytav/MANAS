@@ -1,7 +1,7 @@
 CUDACC = nvcc
 MPICXX=mpicxx
 CXX=g++
-CUDAFLAGS=-Wwrite-strings
+CUDAFLAGS=
 #CUDAFLAGS=--maxrregcount=128
 DEBUGFLAGS=-g
 CUDALDFLAGS=-L/usr/local/cuda/lib64/ -lcuda -lcudart -lm -lnvToolsExt
