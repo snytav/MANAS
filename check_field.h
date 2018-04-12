@@ -279,12 +279,12 @@ double saveVectorField(double *x,double *y,double *z,
 }
 
 double checkVectorField(double *x,double *y,double *z,
-		                int device_flag,int size,char *name,int num,int nt)
+		                int device_flag,int size,string name,int num,int nt)
 {
 	FILE *f;
 	char str[100];
 
-	sprintf(str,"fch_%s_num%03d_nt%05d.dat",name,num,nt);
+	sprintf(str,"fch_%s_num%03d_nt%05d.dat",name.c_str(),num,nt);
 
 	if((f = fopen(str,"rb")) == NULL) return 1.0;
 
@@ -304,19 +304,19 @@ double checkVectorField(double *x,double *y,double *z,
 	fread(h_z,sizeof(double),size,f);
 	
 	char cmp[100];
-	strcpy(cmp,name);
+	strcpy(cmp,name.c_str());
 
 	strcat(cmp,"x");
 	t_x = checkPointArray(h_x,x,CHECK_FIELD_TOLERANCE,
             size,0,device_flag,
             cmp,num,nt);
 
-	strcpy(cmp,name);
+	strcpy(cmp,name.c_str());
 	strcat(cmp,"y");
 	t_y = checkPointArray(h_y,y,CHECK_FIELD_TOLERANCE,
             size,0,device_flag,
             cmp,num,nt);
-	strcpy(cmp,name);
+	strcpy(cmp,name.c_str());
 	strcat(cmp,"z");
 	t_z = checkPointArray(h_z,z,CHECK_FIELD_TOLERANCE,
             size,0,device_flag,

@@ -11,7 +11,7 @@
 
 int get_mem_used_sizeMb();
 int get_mem_used_various(int nt,char *where);
-int memoryAllocationLog(size_t size,char *fname,int line_number);
+int memoryAllocationLog(size_t size,string fname,int line_number);
 
 
 #endif /* MEMORY_CONTROL_H_ */

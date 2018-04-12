@@ -189,7 +189,7 @@ int get_mem_used_various(int nt,char *where)
 }
 
 
-int memoryAllocationLog(size_t size,char *fname,int line_number)
+int memoryAllocationLog(size_t size,string fname,int line_number)
 {
     FILE *f;
     char s[100];
@@ -213,7 +213,7 @@ int memoryAllocationLog(size_t size,char *fname,int line_number)
 
     if((f = fopen(s,"at")) == NULL) return 1;
     
-    fprintf(f,"                         %10d at %20s line %5d total(Kb) %10ld from system %10ld \n",size,fname,line_number,total_memory_volume/1024,m_used);
+    fprintf(f,"                         %10d at %20s line %5d total(Kb) %10ld from system %10ld \n",size,fname.c_str(),line_number,total_memory_volume/1024,m_used);
 	
     fclose(f);
     

@@ -6830,7 +6830,7 @@ void printCellCurrents(int num,int nt,char *name,char *where)
         fclose(f);
 }
 
-int memory_monitor(char *legend,int nt)
+int memory_monitor(string legend,int nt)
 {
 	static int first = 1;
 	static FILE *f;
@@ -6852,7 +6852,7 @@ int memory_monitor(char *legend,int nt)
 	int err = GetDeviceMemory(&m_free,&m_total);
 
 	sysinfo(&info);
-	fprintf(f,"step %10d %50s GPU memory total %10d free %10d free CPU memory %10u \n",nt,legend,m_total/1024/1024,m_free/1024/1024,info.freeram/1024/1024);
+	fprintf(f,"step %10d %50s GPU memory total %10d free %10d free CPU memory %10u \n",nt,legend.c_str(),m_total/1024/1024,m_free/1024/1024,info.freeram/1024/1024);
 
 }
 

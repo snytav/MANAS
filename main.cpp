@@ -33,6 +33,7 @@ int main(int argc,char*argv[])
       int beam_plasma,start_from_file;
       double tex0,tey0,tez0,Tb,rimp,rbd,ni,lx,ly,lz,tau,B0,bx,by,bz,pl_y,pl_z;
       int lp,nx,ny,nz,np,total_steps,minor_steps,phase;
+      char mem_string[100];
 
    readParameterFile(&beam_plasma,
 		             &start_from_file,
@@ -63,7 +64,8 @@ int main(int argc,char*argv[])
 
   
    plasma->Initialize();
-   get_mem_used_various(0,"after  init");
+   strcpy(mem_string,"after  init");
+   get_mem_used_various(0,mem_string);
 
 
 
@@ -99,14 +101,18 @@ int main(int argc,char*argv[])
 //    		   nt,info.freeram/1024/1024,mem_used,m_total/1024/1024,m_free/1024/1024);
 //       get_mem_used_various();
 //#endif
-	   get_mem_used_various(nt, "before step");
+	   strcpy(mem_string,"before step");
+	   get_mem_used_various(nt, mem_string);
 
        plasma->Step(nt);
-           get_mem_used_various(nt, "after step");
+       strcpy(mem_string,"after step");
+           get_mem_used_various(nt, mem_string);
        plasma->BeamInput(nt);
-           get_mem_used_various(nt, "after BeamInput");
+       strcpy(mem_string,"after BeamInput");
+           get_mem_used_various(nt, mem_string);
        plasma->Diagnose(nt);
-           get_mem_used_various(nt, "after Diagnose");
+       strcpy(mem_string,"aFTER Diagnose");
+           get_mem_used_various(nt, mem_string);
 	   
 
 //       GetDeviceMemory(&m_free,&m_total);
