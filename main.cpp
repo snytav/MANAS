@@ -3,6 +3,10 @@
 #include "mpi_shortcut.h"
 #include "memory_control.h"
 
+//TODO 13.04
+//1. trace parameter nt_start_from_file in LoadTestData, and set it more than 0
+//2. start cleaning dirty code: less parameters, less variables, less lines
+
 int main(int argc,char*argv[])
 {
       XeonPlasma<GPUCell,DIMENSIONS> *plasma;
