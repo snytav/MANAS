@@ -242,27 +242,27 @@ int AllocateBinaryParticleArraysOneSortFloat(
 	     pos = ftell(f);
 
 	     sysinfo(&info);
-	     printf("before1  %d free %u \n",nt,info.freeram/1024/1024);
+	     printf("before1  %d free %lu \n",nt,info.freeram/1024/1024);
 	     readFortranBinaryArray(f,buf); //ex
 	     pos = ftell(f);
 	     sysinfo(&info);
-	     printf("before1  %d free %u \n",nt,info.freeram/1024/1024);
+	     printf("before1  %d free %lu \n",nt,info.freeram/1024/1024);
 	     readFortranBinaryArray(f,buf); //ey
 	     pos = ftell(f);
 	     sysinfo(&info);
-	     printf("before1  %d free %u \n",nt,info.freeram/1024/1024);
+	     printf("before1  %d free %lu \n",nt,info.freeram/1024/1024);
 
 	     readFortranBinaryArray(f,buf);  //ez
 	     pos = ftell(f);
 
 	     sysinfo(&info);
-	     printf("before1  %d free %u \n",nt,info.freeram/1024/1024);
+	     printf("before1  %d free %lu \n",nt,info.freeram/1024/1024);
 
 	     readFortranBinaryArray(f,buf);  //hx
 	     pos = ftell(f);
 
 	     sysinfo(&info);
-	     printf("before1  %d free %u \n",nt,info.freeram/1024/1024);
+	     printf("before1  %d free %lu \n",nt,info.freeram/1024/1024);
 
 	     readFortranBinaryArray(f,buf);   //hy
 	     pos = ftell(f);
@@ -296,7 +296,7 @@ int AllocateBinaryParticleArraysOneSortFloat(
 //                                               ion_q_m,ion_m,total_ions);
 
 	     sysinfo(&info);
-	     printf("before1  %d free %u \n",nt,info.freeram/1024/1024);
+	     printf("before1  %d free %lu \n",nt,info.freeram/1024/1024);
 	     err = ferror(f);
          if(beam_plasma == 1)
          {
@@ -307,7 +307,7 @@ int AllocateBinaryParticleArraysOneSortFloat(
 
             err = ferror(f);
 	        sysinfo(&info);
-	        printf("before1  %d free %u \n",nt,info.freeram/1024/1024);
+	        printf("before1  %d free %lu \n",nt,info.freeram/1024/1024);
             err = ferror(f);
 //	     readBinaryParticlesOneSort1(f,vp,BEAM_ELECTRON,nt);
 	        beam_electrons->total = readBinaryParticleArraysOneSort(f,&(beam_electrons->dbg_x),&(beam_electrons->dbg_y),&(beam_electrons->dbg_z),

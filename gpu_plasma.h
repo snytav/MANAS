@@ -685,7 +685,7 @@ __device__ void GPU_GetFlownBeamNumber_SingleNode(Cell<Particle,dims>  **cells,
 					int qq  = 0;
 				}
 
-		printf("(%d,%d,%d) FLOwN BEAM %d\n",c->cnum.x,c->cnum.y,c->cnum.z(),(*c).beam_boundary_counter);
+		printf("(%d,%d,%d) FLOwN BEAM %e\n",c->cnum.x,c->cnum.y,c->cnum.z(),(*c).beam_boundary_counter);
 
 		if((*c).beam_boundary_counter > 0)
 		{
@@ -3532,10 +3532,15 @@ virtual void emh2(double *locHx,double *locHy,double *locHz,
 		     pn_sum = pn_ave;
 		     pn_ave /= (*AllCells).size();
 
-		     printf("SORT m %15.5e q_m %15.5e %10d (sum %10d) particles in %8d cells: MIN %10d MAX %10d average %10d \n",
-		    		 m,            q_m,       total_particles,pn_sum,
+		     printf("SORT m %15.5e q_m %15.5e %10d (sum %10d) particles in %8lu cells: MIN %10d MAX %10d average %10d \n",
+		    		 m,      
+	                        q_m,       
+	                         total_particles,
+	                          pn_sum,
 		    		 (*AllCells).size(),
-		    		 pn_min,pn_max,pn_ave);
+		    		 pn_min,
+	                         pn_max,
+	                         pn_ave);
 //		     if((err = ferror(f)) != 0)
 //		    		    	  {
 //		    		    		 // int qq = 0;
@@ -4590,7 +4595,7 @@ int SinglePeriodicBoundary(double *E,int dir,int start1,int end1,int start2,int 
 
 	     sprintf(d_hxfile,"dnhx%06d.dat",2*nt-1);
 	     sprintf(d_hyfile,"dnhy%06d.dat",2*nt-1);
-	     printf(d_hyfile);
+	     printf("%s \n",d_hyfile);
 	     sprintf(d_hzfile,"dnhz%06d.dat",2*nt-1);
 
 	     sprintf(jxfile,"dnjx%06d.dat",2*nt);
@@ -5872,7 +5877,7 @@ void copyCellCurrentsToDevice(CellDouble *d_jx,CellDouble *d_jy,CellDouble *d_jz
 #endif
 	   		}
 
-	   		sprintf(str,"List%05d_rank%05d_%s.dat\0",nt,getRank(),where.c_str());
+	   		sprintf(str,"List%05d_rank%05d_%s.dat",nt,getRank(),where.c_str());
 //	   		puts(str);
 
 	   		if((f = fopen(str,"wt")) == NULL) return;
@@ -6852,7 +6857,7 @@ int memory_monitor(string legend,int nt)
 	int err = GetDeviceMemory(&m_free,&m_total);
 
 	sysinfo(&info);
-	fprintf(f,"step %10d %50s GPU memory total %10d free %10d free CPU memory %10u \n",nt,legend.c_str(),m_total/1024/1024,m_free/1024/1024,info.freeram/1024/1024);
+	fprintf(f,"step %10d %50s GPU memory total %10lu free %10lu free CPU memory %10lu \n",nt,legend.c_str(),m_total/1024/1024,m_free/1024/1024,info.freeram/1024/1024);
 
 }
 

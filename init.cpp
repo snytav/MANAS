@@ -54,11 +54,11 @@ struct cag05a_1_ {
 
 /* Initialized data */
 
-struct {
+struct cag05b {
     doublereal e_1[2];
     } cag05b_ = { 1., -1. };
 
-struct {
+struct cag05a {
     integer e_1[3];
     } cag05a_ = { 1, 255, 25555 };
 

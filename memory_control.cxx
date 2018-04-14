@@ -169,7 +169,7 @@ int get_mem_used_various(int nt,char *where)
 
 	read_off_memory_status(result);
 
-	fprintf(f,"nt %8d %20s used %5.2f percent of %10ld Kb total = %10ld Kb free %10ld Kb (meminfo) RAM free %10lu USED: size %5ld resident %5ld share %5ld text %5ld lib %5ld data %5ld dt %5ld GPU total %10u free %10u (in Kb, from /proc/self/statm )\n",
+	fprintf(f,"nt %8d %20s used %5.2f percent of %10ld Kb total = %10ld Kb free %10ld Kb (meminfo) RAM free %10lu USED: size %5ld resident %5ld share %5ld text %5ld lib %5ld data %5ld dt %5ld GPU total %10lu free %10lu (in Kb, from /proc/self/statm )\n",
 			nt,
 			where,
 	                frac_used,m_total1,m_used,m_free1,
@@ -213,7 +213,7 @@ int memoryAllocationLog(size_t size,string fname,int line_number)
 
     if((f = fopen(s,"at")) == NULL) return 1;
     
-    fprintf(f,"                         %10d at %20s line %5d total(Kb) %10ld from system %10ld \n",size,fname.c_str(),line_number,total_memory_volume/1024,m_used);
+    fprintf(f,"                         %10lu at %20s line %5d total(Kb) %10ld from system %10ld \n",size,fname.c_str(),line_number,total_memory_volume/1024,m_used);
 	
     fclose(f);
     
