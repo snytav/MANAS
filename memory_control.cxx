@@ -169,7 +169,7 @@ int get_mem_used_various(int nt,char *where)
 
 	read_off_memory_status(result);
 
-	fprintf(f,"nt %8d %20s used %5.2f percent of %10ld Kb total = %10ld Kb free %10ld Kb (meminfo) RAM free %10u USED: size %5ld resident %5ld share %5ld text %5ld lib %5ld data %5ld dt %5ld GPU total %10u free %10u (in Kb, from /proc/self/statm )\n",
+	fprintf(f,"nt %8d %20s used %5.2f percent of %10ld Kb total = %10ld Kb free %10ld Kb (meminfo) RAM free %10lu USED: size %5ld resident %5ld share %5ld text %5ld lib %5ld data %5ld dt %5ld GPU total %10u free %10u (in Kb, from /proc/self/statm )\n",
 			nt,
 			where,
 	                frac_used,m_total1,m_used,m_free1,
