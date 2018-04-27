@@ -20,8 +20,8 @@
                1   number of mesh nodes along Z 
      1.00000e-03   timestep 
                1   1 if beam-plasma interaction, 0 if beam-beam 
-              -2   moment to start from saved
-               2   phase to start from save
+               1   moment to start from saved
+               0   phase to start from save
               100   total steps 
                2   number of steps between diagnostic files 
  

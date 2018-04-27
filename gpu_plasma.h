@@ -4657,7 +4657,7 @@ int SinglePeriodicBoundary(double *E,int dir,int start1,int end1,int start2,int 
 	     ParticleArrays ions,electrons,beam_electrons;
 
 /////////////////////////////////////////////////////////////////////
-	  if(nt_start_from_file >= 0)
+	  if(nt_start_from_file >= 0) //if READING particles from file
 	  {
 	     InitBinaryParticlesArrays(part_name,part_nt,
 	    		 &ions,&electrons,&beam_electrons,
@@ -4665,154 +4665,156 @@ int SinglePeriodicBoundary(double *E,int dir,int start1,int end1,int start2,int 
 	    		 beam_plasma);
 	     change_work_dir();
 	  }
-
-	  if(beam_plasma == 1)
+	  else  // if NOT reading particles from file
 	  {
 
-	     initial[0].total    = N;
-	     initial[1].total    = 2*N;
-	     initial[2].total    = N;
-
-	     diagnostics[0].total    = N;
-	     diagnostics[1].total    = 2*N;
-	     diagnostics[2].total    = N;
-
-	     sorts = 3;
-	  }
-	  else
-	  {
-		  if(nt_start_from_file >= 0)
+		  if(beam_plasma == 1)
 		  {
-		     initial[0].total = ions.total;
+
+		    initial[0].total    = N;
+		    initial[1].total    = 2*N;
+		    initial[2].total    = N;
+
+		    diagnostics[0].total    = N;
+		    diagnostics[1].total    = 2*N;
+		    diagnostics[2].total    = N;
+
+		    sorts = 3;
 		  }
 		  else
 		  {
-			 initial[0].total = N;
+			  if(nt_start_from_file >= 0)
+			  {
+			    initial[0].total = ions.total;
+			  }
+			  else
+			  {
+				initial[0].total = N;
+			  }
+			  sorts = 1;
 		  }
-		  sorts = 1;
-	  }
 
 
 
 
-	     component_total = 2*N;
+		    component_total = 2*N;
 
-//	     diagnose = (float *)malloc(sizeof(float)*sorts*component_total*8);
-//	     MemoryAllocate((void**)&d_diagnose,sizeof(float)*sorts*component_total*8);
+	//	     diagnose = (float *)malloc(sizeof(float)*sorts*component_total*8);
+	//	     MemoryAllocate((void**)&d_diagnose,sizeof(float)*sorts*component_total*8);
 
-	     AllocateBinaryParticlesArrays(&(initial[0]),&(initial[1]),&(initial[2]));
-	     AllocateBinaryParticlesArraysFloat(&(diagnostics[0]),&(diagnostics[1]),&(diagnostics[2]));
+		    AllocateBinaryParticlesArrays(&(initial[0]),&(initial[1]),&(initial[2]));
+		    AllocateBinaryParticlesArraysFloat(&(diagnostics[0]),&(diagnostics[1]),&(diagnostics[2]));
 
-//	     AllocateDeviceParticleDiagnosticPointers(d_diagnostics,diagnostics);
+	//	     AllocateDeviceParticleDiagnosticPointers(d_diagnostics,diagnostics);
 
-//	  for(int j = 535;j < 542;j++)
-//	  {
-//	     printf("%10d %15.5e %15.5e %15.5e %15.5e %15.5e %15.5e \n",j,
-//	    		 electrons.dbg_x[j],electrons.dbg_y[j],electrons.dbg_z[j],
-//   	    		 electrons.dbg_px[j],electrons.dbg_py[j],electrons.dbg_pz[j]
-//	   		                                           );
-//	  }
-         writeParamsFile(tex0,tey0,tez0,
-        		         Tb,rimp,rbd,ni,
-                         xmax.x,xmax.y,xmax.z(),
-	                     lp,mesh.x,mesh.y,mesh.z(),
-	                     tau,Bx0,beam_max.x,beam_max.y,beam_max.z(),
-	                     plasma_dim_y,plasma_dim_z,
-	                     beam_plasma,nt_start_from_file,
-	                     total_steps,minor_steps,start_phase);
-
-
-
-      int jmb_real;
-
-      if((nt_start_from_file < 0) && (beam_plasma == 1))
-      {
-	     InitUniformMaxwellianParticles(1,N,tex0,tey0,tez0,
-	    		   beam_max.x,beam_max.y,beam_max.z(),&jmb_real,
-	    		   xmax.x,xmax.y,xmax.z(),meh,Tb,rimp,rbd,
-				   initial[0].dbg_x,initial[0].dbg_y,initial[0].dbg_z,
-				   initial[0].dbg_px,initial[0].dbg_py,initial[0].dbg_pz,
- 				   initial[2].dbg_x,initial[2].dbg_y,initial[2].dbg_z,
- 				   initial[2].dbg_px,initial[2].dbg_py,initial[2].dbg_pz,
- 				   initial[1].dbg_x,initial[1].dbg_y,initial[1].dbg_z,
- 				   initial[1].dbg_px,initial[1].dbg_py,initial[1].dbg_pz);
-
-	     ClearPlasmaBounds(plasma_dim_y,plasma_dim_z,
-	    		   initial[0].dbg_x, initial[0].dbg_y, initial[0].dbg_z,
-				   initial[0].dbg_px,initial[0].dbg_py,initial[0].dbg_pz,&(initial[0].total));
-	     ClearPlasmaBounds(plasma_dim_y,plasma_dim_z,
-	    		   initial[1].dbg_x, initial[1].dbg_y, initial[1].dbg_z,
-				   initial[1].dbg_px,initial[1].dbg_py,initial[1].dbg_pz,&(initial[1].total));
-	     ClearPlasmaBounds(plasma_dim_y,plasma_dim_z,
-	    		   initial[2].dbg_x, initial[2].dbg_y, initial[2].dbg_z,
-				   initial[2].dbg_px,initial[2].dbg_py,initial[2].dbg_pz,&jmb_real);
-      }
+	//	  for(int j = 535;j < 542;j++)
+	//	  {
+	//	     printf("%10d %15.5e %15.5e %15.5e %15.5e %15.5e %15.5e \n",j,
+	//	    		 electrons.dbg_x[j],electrons.dbg_y[j],electrons.dbg_z[j],
+	//   	    		 electrons.dbg_px[j],electrons.dbg_py[j],electrons.dbg_pz[j]
+	//	   		                                           );
+	//	  }
+		writeParamsFile(tex0,tey0,tez0,
+					Tb,rimp,rbd,ni,
+				xmax.x,xmax.y,xmax.z(),
+				    lp,mesh.x,mesh.y,mesh.z(),
+				    tau,Bx0,beam_max.x,beam_max.y,beam_max.z(),
+				    plasma_dim_y,plasma_dim_z,
+				    beam_plasma,nt_start_from_file,
+				    total_steps,minor_steps,start_phase);
 
 
-#ifdef DEBUG_LOAD_PARTICLES_FROM_FILE
-	       double t_beam_electron_x = compare(beam_electrons1.dbg_x,beam_electrons.dbg_x,N,"beam_electronx",tol);
-	       double t_beam_electron_y = compare(beam_electrons1.dbg_y,beam_electrons.dbg_y,N,"beam_electrony",tol);
-	       double t_beam_electron_z = compare(beam_electrons1.dbg_z,beam_electrons.dbg_z,N,"beam_electronz",tol);
-	       double t_beam_electron_px = compare_prints(beam_electrons1.dbg_px,beam_electrons.dbg_px,10,"beam_electronpx",tol,1);
-	       double t_beam_electron_py = compare(beam_electrons1.dbg_py,beam_electrons.dbg_py,N,"beam_electronpy",tol);
-	       double t_beam_electron_pz = compare(beam_electrons1.dbg_pz,beam_electrons.dbg_pz,N,"beam_electronpz",tol);
-	       printf("ELECTRONS x %15.6e y %15.6e z %15.6e px %15.6e py %15.6e pz %15.6e \n",t_beam_electron_x,t_beam_electron_y,t_beam_electron_z,t_beam_electron_px,
-	     	 t_beam_electron_py,t_beam_electron_pz);
-#endif
-//	       double t_electron_x = compare(electrons1.dbg_x,electrons.dbg_x,N,"electronx",tol);
-//	       double t_electron_y = compare(electrons1.dbg_y,electrons.dbg_y,N,"electrony",tol);
-//	       double t_electron_z = compare(electrons1.dbg_z,electrons.dbg_z,N,"electronz",tol);
-//	       double t_electron_px = compare_prints(electrons1.dbg_px,electrons.dbg_px,10,"electronpx",tol,1);
-//	       double t_electron_py = compare(electrons1.dbg_py,electrons.dbg_py,N,"electronpy",tol);
-//	       double t_electron_pz = compare(electrons1.dbg_pz,electrons.dbg_pz,N,"electronpz",tol);
-//	       printf("BEAM x %15.6e y %15.6e z %15.6e px %15.6e py %15.6e pz %15.6e \n",t_electron_x,t_electron_y,t_electron_z,t_electron_px,
-//	     	 t_electron_py,t_electron_pz);
-         if(beam_plasma == 1)
-         {
-           getMassCharge(&initial[0],&initial[1],&initial[2],ni,rbd,lp);
+
+	      int jmb_real;
+
+	      if((nt_start_from_file < 0) && (beam_plasma == 1))
+	      {
+		    InitUniformMaxwellianParticles(1,N,tex0,tey0,tez0,
+				  beam_max.x,beam_max.y,beam_max.z(),&jmb_real,
+				  xmax.x,xmax.y,xmax.z(),meh,Tb,rimp,rbd,
+					  initial[0].dbg_x,initial[0].dbg_y,initial[0].dbg_z,
+					  initial[0].dbg_px,initial[0].dbg_py,initial[0].dbg_pz,
+					  initial[2].dbg_x,initial[2].dbg_y,initial[2].dbg_z,
+					  initial[2].dbg_px,initial[2].dbg_py,initial[2].dbg_pz,
+					  initial[1].dbg_x,initial[1].dbg_y,initial[1].dbg_z,
+					  initial[1].dbg_px,initial[1].dbg_py,initial[1].dbg_pz);
+
+		    ClearPlasmaBounds(plasma_dim_y,plasma_dim_z,
+				  initial[0].dbg_x, initial[0].dbg_y, initial[0].dbg_z,
+					  initial[0].dbg_px,initial[0].dbg_py,initial[0].dbg_pz,&(initial[0].total));
+		    ClearPlasmaBounds(plasma_dim_y,plasma_dim_z,
+				  initial[1].dbg_x, initial[1].dbg_y, initial[1].dbg_z,
+					  initial[1].dbg_px,initial[1].dbg_py,initial[1].dbg_pz,&(initial[1].total));
+		    ClearPlasmaBounds(plasma_dim_y,plasma_dim_z,
+				  initial[2].dbg_x, initial[2].dbg_y, initial[2].dbg_z,
+					  initial[2].dbg_px,initial[2].dbg_py,initial[2].dbg_pz,&jmb_real);
+	      }
 
 
-  	       diagnostics[0].m        = initial[0].m[0];
-  	       diagnostics[1].m        = initial[1].m[0];
-  	       diagnostics[2].m        = initial[2].m[0];
-  	       diagnostics[0].q_m      = initial[0].q_m;
-  	       diagnostics[1].q_m      = initial[1].q_m;
-  	       diagnostics[2].q_m      = initial[2].q_m;
+	#ifdef DEBUG_LOAD_PARTICLES_FROM_FILE
+		      double t_beam_electron_x = compare(beam_electrons1.dbg_x,beam_electrons.dbg_x,N,"beam_electronx",tol);
+		      double t_beam_electron_y = compare(beam_electrons1.dbg_y,beam_electrons.dbg_y,N,"beam_electrony",tol);
+		      double t_beam_electron_z = compare(beam_electrons1.dbg_z,beam_electrons.dbg_z,N,"beam_electronz",tol);
+		      double t_beam_electron_px = compare_prints(beam_electrons1.dbg_px,beam_electrons.dbg_px,10,"beam_electronpx",tol,1);
+		      double t_beam_electron_py = compare(beam_electrons1.dbg_py,beam_electrons.dbg_py,N,"beam_electronpy",tol);
+		      double t_beam_electron_pz = compare(beam_electrons1.dbg_pz,beam_electrons.dbg_pz,N,"beam_electronpz",tol);
+		      printf("ELECTRONS x %15.6e y %15.6e z %15.6e px %15.6e py %15.6e pz %15.6e \n",t_beam_electron_x,t_beam_electron_y,t_beam_electron_z,t_beam_electron_px,
+			t_beam_electron_py,t_beam_electron_pz);
+	#endif
+	//	       double t_electron_x = compare(electrons1.dbg_x,electrons.dbg_x,N,"electronx",tol);
+	//	       double t_electron_y = compare(electrons1.dbg_y,electrons.dbg_y,N,"electrony",tol);
+	//	       double t_electron_z = compare(electrons1.dbg_z,electrons.dbg_z,N,"electronz",tol);
+	//	       double t_electron_px = compare_prints(electrons1.dbg_px,electrons.dbg_px,10,"electronpx",tol,1);
+	//	       double t_electron_py = compare(electrons1.dbg_py,electrons.dbg_py,N,"electronpy",tol);
+	//	       double t_electron_pz = compare(electrons1.dbg_pz,electrons.dbg_pz,N,"electronpz",tol);
+	//	       printf("BEAM x %15.6e y %15.6e z %15.6e px %15.6e py %15.6e pz %15.6e \n",t_electron_x,t_electron_y,t_electron_z,t_electron_px,
+	//	     	 t_electron_py,t_electron_pz);
+		if(beam_plasma == 1)
+		{
+		  getMassCharge(&initial[0],&initial[1],&initial[2],ni,rbd,lp);
 
-	       AllocateDeviceParticleDiagnosticPointers(&d_diagnostics,
-	     			                              &host_copy_d_diagnostics,
-	     			                              &diagnostics);
 
-	       initial[2].total = jmb_real;
-	       diagnostics[2].total = jmb_real;
-         }
-///////////////////////////////////////////////////////////////////////
-         if(beam_plasma == 1)
-         {
-	        InitBinaryParticles(bin_vp,part_nt,
-	     			  initial[0].dbg_x, initial[0].dbg_y, initial[0].dbg_z,
-	     			  initial[0].dbg_px,initial[0].dbg_py,initial[0].dbg_pz,
-	     			  initial[0].q_m,initial[0].m[0],
-	     			  initial[0].total,
-	     			  initial[1].dbg_x,initial[1].dbg_y,initial[1].dbg_z,
-	     			  initial[1].dbg_px,initial[1].dbg_py,initial[1].dbg_pz,
-	     			  initial[1].q_m,initial[1].m[0],
-	     			  initial[1].total,
-	     			  initial[2].dbg_x,initial[2].dbg_y,initial[2].dbg_z,
-	     			  initial[2].dbg_px,initial[2].dbg_py,initial[2].dbg_pz,
-	     			  initial[2].q_m,initial[2].m[0],
-	     			  initial[2].total);
-         }
-         else
-         {
- 	        InitBinaryParticlesTotal(bin_vp,part_nt,
- 	     			  initial[0].dbg_x, initial[0].dbg_y, initial[0].dbg_z,
- 	     			  initial[0].dbg_px,initial[0].dbg_py,initial[0].dbg_pz,
- 	     			  initial[0].q_m,initial[0].m,
- 	     			  initial[0].total);
-         }
-//	      InitBinaryParticles(part_name,bin_vp,part_nt);
+		      diagnostics[0].m        = initial[0].m[0];
+		      diagnostics[1].m        = initial[1].m[0];
+		      diagnostics[2].m        = initial[2].m[0];
+		      diagnostics[0].q_m      = initial[0].q_m;
+		      diagnostics[1].q_m      = initial[1].q_m;
+		      diagnostics[2].q_m      = initial[2].q_m;
 
+		      AllocateDeviceParticleDiagnosticPointers(&d_diagnostics,
+								      &host_copy_d_diagnostics,
+								      &diagnostics);
+
+		      initial[2].total = jmb_real;
+		      diagnostics[2].total = jmb_real;
+		}
+	///////////////////////////////////////////////////////////////////////
+		if(beam_plasma == 1)
+		{
+			InitBinaryParticles(bin_vp,part_nt,
+					  initial[0].dbg_x, initial[0].dbg_y, initial[0].dbg_z,
+					  initial[0].dbg_px,initial[0].dbg_py,initial[0].dbg_pz,
+					  initial[0].q_m,initial[0].m[0],
+					  initial[0].total,
+					  initial[1].dbg_x,initial[1].dbg_y,initial[1].dbg_z,
+					  initial[1].dbg_px,initial[1].dbg_py,initial[1].dbg_pz,
+					  initial[1].q_m,initial[1].m[0],
+					  initial[1].total,
+					  initial[2].dbg_x,initial[2].dbg_y,initial[2].dbg_z,
+					  initial[2].dbg_px,initial[2].dbg_py,initial[2].dbg_pz,
+					  initial[2].q_m,initial[2].m[0],
+					  initial[2].total);
+		}
+		else
+		{
+			InitBinaryParticlesTotal(bin_vp,part_nt,
+					  initial[0].dbg_x, initial[0].dbg_y, initial[0].dbg_z,
+					  initial[0].dbg_px,initial[0].dbg_py,initial[0].dbg_pz,
+					  initial[0].q_m,initial[0].m,
+					  initial[0].total);
+		}
+	//	      InitBinaryParticles(part_name,bin_vp,part_nt);
+	  } //end else if NOT reading particles from file
 
          AssignArraysToCells();
 
